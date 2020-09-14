@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     dataBase.setHostName("127.0.0.1");
     dataBase.setUserName("root");
     dataBase.setDatabaseName("DatabasE.db");
+        
+    if (!dataBase.open())
+        QMessageBox::critical(this, "БД не открылась", dataBase.lastError().text());
 }
 
 MainWindow::~MainWindow()
@@ -27,10 +30,11 @@ void MainWindow::on_pushButton_clicked()
     if(dataBase.open())
     {
         sqlQuery.prepare("INSERT INTO Diary(data, record) VALUES ('"+cb+"', '"+l+"')");
-        sqlQuery.exec();
+        if(!sqlQuery.exec())
+            QMessageBox::critical(this, "Запрос не выполнился", "В принципе, не удивительно\n" + dataBase.lastError().databaseText() + "\n" + dataBase.lastError().driverText());
         QMessageBox::information(this, "Состояние:", "Заметка записана!");
     }else
-        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно");
+        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно\n" + dataBase.lastError().text());
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -41,7 +45,8 @@ void MainWindow::on_pushButton_2_clicked()
     if(dataBase.open())
     {
         sqlQuery.prepare("SELECT * FROM Diary");
-        sqlQuery.exec();
+        if(!sqlQuery.exec())
+            QMessageBox::critical(this, "Запрос не выполнился", "В принципе, не удивительно\n" + dataBase.lastError().databaseText() + "\n" + dataBase.lastError().driverText());
         QString temp = "";
         while(sqlQuery.next())
         {
@@ -53,7 +58,7 @@ void MainWindow::on_pushButton_2_clicked()
         else
             QMessageBox::warning(this, "Заметки:", "На этот день заметок нет!");
     }else
-        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно");
+        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно\n" + dataBase.lastError().text());
 }
 
 void MainWindow::on_pushButton_3_clicked()
@@ -68,15 +73,17 @@ void MainWindow::on_pushButton_3_clicked()
         if(l == "")
         {
             sqlQuery.prepare("DELETE FROM Diary WHERE data='"+cb+"'");
-            sqlQuery.exec();
+            if(!sqlQuery.exec())
+            QMessageBox::critical(this, "Запрос не выполнился", "В принципе, не удивительно\n" + dataBase.lastError().databaseText() + "\n" + dataBase.lastError().driverText());
         }else
         {
             sqlQuery.prepare("DELETE FROM Diary WHERE data='"+cb+"' AND record='"+l+"'");
-            sqlQuery.exec();
+            if(!sqlQuery.exec())
+            QMessageBox::critical(this, "Запрос не выполнился", "В принципе, не удивительно\n" + dataBase.lastError().databaseText() + "\n" + dataBase.lastError().driverText());
         }
         QMessageBox::information(this, "Состояние:", "Заметка удалена!");
     }else
-        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно");
+        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно\n" + dataBase.lastError().text());
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -88,10 +95,11 @@ void MainWindow::on_pushButton_4_clicked()
     if(dataBase.open())
     {
         sqlQuery.prepare("UPDATE Diary set record='"+l+"' WHERE data='"+cb+"'");
-        sqlQuery.exec();
+        if(!sqlQuery.exec())
+            QMessageBox::critical(this, "Запрос не выполнился", "В принципе, не удивительно\n" + dataBase.lastError().databaseText() + "\n" + dataBase.lastError().driverText());
         QMessageBox::information(this, "Состояние:", "Заметка изменена!");
     }else
-        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно");
+        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно\n" + dataBase.lastError().text());
 }
 
 void MainWindow::on_pushButton_5_clicked()
@@ -100,7 +108,8 @@ void MainWindow::on_pushButton_5_clicked()
     if(dataBase.open())
     {
         sqlQuery.prepare("SELECT * FROM Diary");
-        sqlQuery.exec();
+        if(!sqlQuery.exec())
+            QMessageBox::critical(this, "Запрос не выполнился", "В принципе, не удивительно\n" + dataBase.lastError().databaseText() + "\n" + dataBase.lastError().driverText());
         QString temp = "";
 
         while(sqlQuery.next())
@@ -111,7 +120,7 @@ void MainWindow::on_pushButton_5_clicked()
         else
             QMessageBox::warning(this, "Заметки:", "Заметок нет!");
     }else
-        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно");
+        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно\n" + dataBase.lastError().text());
 }
 
 void MainWindow::on_pushButton_6_clicked()
@@ -120,10 +129,11 @@ void MainWindow::on_pushButton_6_clicked()
     if(dataBase.open())
     {
         sqlQuery.prepare("DELETE FROM Diary");
-        sqlQuery.exec();
+        if(!sqlQuery.exec())
+            QMessageBox::critical(this, "Запрос не выполнился", "В принципе, не удивительно\n" + dataBase.lastError().databaseText() + "\n" + dataBase.lastError().driverText());
         QMessageBox::information(this, "Состояние:", "Все заметки удалены!");
     }else
-        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно");
+        QMessageBox::critical(this, "БД не открылась", "В принципе, не удивительно\n" + dataBase.lastError().text());
 }
 
 void MainWindow::on_actionKamishiro_Iyamoto_triggered()
