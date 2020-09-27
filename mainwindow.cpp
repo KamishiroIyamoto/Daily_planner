@@ -138,5 +138,5 @@ void MainWindow::on_pushButton_6_clicked()
 
 void MainWindow::on_actionKamishiro_Iyamoto_triggered()
 {
-    QMessageBox::information(this, "Сведения о разработчике:", "Липко Юрий Михайлович гр. 90001995");
+    QMessageBox::information(this, "Разработчик и его ВК:", "Собственно, этот человек учится в коледже и сидит дома\nЕго ВК: https://vk.com/kamishiro_iyamoto");
 }
