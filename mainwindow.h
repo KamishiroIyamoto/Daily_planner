@@ -42,3 +42,4 @@ private:
     QSqlQuery sqlQuery;
 };
 #endif // MAINWINDOW_H
+//Юра я оказывается могу чето менять прикинь. Или нет?
